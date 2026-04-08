@@ -1,0 +1,33 @@
+name: Update Serie D Bracket Daily
+
+on:
+  schedule:
+    - cron: '0 18 * * *'  # 6 PM daily
+  workflow_dispatch:      # Manual trigger
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Test scrapers
+        run: python src/scraper.py
+      
+      - name: Generate bracket
+        run: python src/main.py
+      
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/
+          git commit -m "Update bracket - $(date)" || true
+          git push
