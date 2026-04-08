@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*.so
+venv/
+ENV/
+env/
+.env
+.vscode/
+.idea/
+*.swp
+build/
+dist/
+*.egg-info/
+.DS_Store
+data/standings.json
+data/bracket.json
